@@ -24,7 +24,7 @@ function MyPage() {
     window.location.href = "./pay"
   }
   useEffect(() => {
-    axios.get(`http://localhost:5000/mypage?user_id=${userInfo.id}`)
+    axios.get(`https://server.ibingo.link/mypage?user_id=${userInfo.id}`)
     .then((res) => {
       dispatch(showMypage(res.data));
     })

@@ -59,7 +59,7 @@ function ContentPage() {
   const handleLoveClick =() => {
     if(isAlreadyLove){
       setIsAlreadyLove(false);
-      axios.delete("http://localhost:5000/like", {data: {
+      axios.delete("https://server.ibingo.link/like", {data: {
         ngoId: currentNgoId,
         userId: userInfo.id
       }})
@@ -67,7 +67,7 @@ function ContentPage() {
       .catch((err) => console.log(err))
     } else if (!isAlreadyLove){
       setIsAlreadyLove(true);
-      axios.post("http://localhost:5000/like", {data: {
+      axios.post("https://server.ibingo.link/like", {data: {
         ngoId: currentNgoId,
         userId: userInfo.id
       }})
@@ -94,7 +94,7 @@ function ContentPage() {
     setOpacity(1);
     checkLove();
     
-    axios.get(`http://localhost:5000/contentpage/${currentNgoId}`)
+    axios.get(`https://server.ibingo.link/contentpage/${currentNgoId}`)
     .then((res) => {
       console.log(res.data);
       setNgoInfo(res.data);
