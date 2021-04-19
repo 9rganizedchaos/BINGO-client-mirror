@@ -1,11 +1,28 @@
 const loginBtn = document.querySelector("#login-button");
 const startBtn = document.querySelector("#start-button");
 
+let userId = 0;
+let ngoIdOfLoveList = [];
+
 const handleLoginBtnClick = () => {
   window.location.href = "./login";
 };
-const handleStartBtnClick = () => {
-  window.location.href = "./test";
+const handleStartBtnClick = async () => {
+  await fetch("https://server.ibingo.link/testcookie", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      if (!res) {
+        window.location.href = "./test";
+      } else {
+        window.location.href = `./list?userId=${userId}`;
+      }
+    })
+    .catch(() => (window.location.href = "./test"));
 };
 
 loginBtn.addEventListener("click", handleLoginBtnClick);
@@ -13,7 +30,7 @@ startBtn.addEventListener("click", handleStartBtnClick);
 
 const getAccessTokenGoogle = async (authorizationCode) => {
   console.log(authorizationCode);
-  await fetch("http://localhost:5000/googlelogin", {
+  await fetch("https://server.ibingo.link/googlelogin", {
     credentials: "include",
     method: "POST",
     body: JSON.stringify({
@@ -30,7 +47,7 @@ const getAccessTokenGoogle = async (authorizationCode) => {
 };
 const getAccessTokenKakao = async (authorizationCode) => {
   console.log("abc");
-  await fetch("http://localhost:5000/kakaologin", {
+  await fetch("https://server.ibingo.link/kakaologin", {
     method: "POST",
     credentials: "include",
     body: JSON.stringify({
@@ -46,7 +63,7 @@ const getAccessTokenKakao = async (authorizationCode) => {
     .catch((err) => console.log(err));
 };
 const logout = async () => {
-  await fetch("http://localhost:5000/logout", {
+  await fetch("https://server.ibingo.link/logout", {
     method: "POST",
     credentials: "include",
   })
@@ -56,7 +73,7 @@ const logout = async () => {
     .catch((err) => console.log(err));
 };
 const checkGoogleAuth = async () => {
-  await fetch("http://localhost:5000/checkgoogleauth", {
+  await fetch("https://server.ibingo.link/checkgoogleauth", {
     method: "GET",
     credentials: "include",
   })
@@ -65,12 +82,13 @@ const checkGoogleAuth = async () => {
     })
     .then((res) => {
       console.log(res.data);
+      userId = res.data.id;
+      ngoIdOfLoveList = res.data.ngoIdOfLoveList;
     })
     .catch((err) => console.log(err));
 };
 const checkKakaoAuth = async () => {
-  console.log("체크카카오어스 실행됨!");
-  await fetch("http://localhost:5000/checkkakaoauth", {
+  await fetch("https://server.ibingo.link/checkkakaoauth", {
     method: "GET",
     credentials: "include",
   })
@@ -92,7 +110,6 @@ if (authorizationCode) {
   getAccessTokenGoogle(authorizationCode);
   getAccessTokenKakao(authorizationCode);
 }
-console.log(authorizationCode);
 
 let toTopCount = 0;
 let tempTopYOffset = 5;

@@ -59,7 +59,7 @@ function ContentPage() {
   const handleLoveClick =() => {
     if(isAlreadyLove){
       setIsAlreadyLove(false);
-      axios.delete("https://server.ibingo.link/like", {data: {
+      axios.delete("https://server.ibingo.link/love", {data: {
         ngoId: currentNgoId,
         userId: userInfo.id
       }})
@@ -67,7 +67,7 @@ function ContentPage() {
       .catch((err) => console.log(err))
     } else if (!isAlreadyLove){
       setIsAlreadyLove(true);
-      axios.post("https://server.ibingo.link/like", {data: {
+      axios.post("https://server.ibingo.link/love", {data: {
         ngoId: currentNgoId,
         userId: userInfo.id
       }})
@@ -86,7 +86,15 @@ function ContentPage() {
   }
 
   const handleSupportBtn = () => {
-    dispatch(showcontentModal(true));
+    axios.post("https://server.ibingo.link/pocket", {
+      userId: userInfo.id,
+      ngoId: currentNgoId,
+      type: 'once',
+      money: 10000,
+    })
+    .then(() => dispatch(showcontentModal(true)))
+    .catch((err) => console.log(err))
+    
   }
 
   useEffect(() => {

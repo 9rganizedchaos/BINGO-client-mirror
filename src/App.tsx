@@ -16,25 +16,25 @@ function App() {
   return (
     <div className='App'>
       <Switch>
-        <Route exact path='/'>
+        <Route path='/'>
           <GuidePage />
         </Route>
-        <Route exact path='/login'>
+        <Route path='/login'>
           <LoginPage />
         </Route>
-        <Route exact path='/test'>
+        <Route path='/test'>
           <TestPage />
         </Route>
-        <Route exact path='/list'>
+        <Route path='/list'>
           <ListPage />
         </Route>
-        <Route exact path='/content'>
+        <Route path='/content'>
           <ContentPage />
         </Route>
-        <Route exact path='/mypage'>
+        <Route path='/mypage'>
           <MyPage />
         </Route>
-        <Route exact path='/pay'>
+        <Route path='/pay'>
           <PayPage />
         </Route>
       </Switch>
